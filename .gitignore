@@ -12,7 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+package-lock.json
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -26,6 +26,7 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+node_modules/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
