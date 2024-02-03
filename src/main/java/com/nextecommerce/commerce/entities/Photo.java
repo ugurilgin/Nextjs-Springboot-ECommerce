@@ -14,8 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Photo {
+
     @Id
     private String id;
+
     private String url;
 
 
