@@ -40,7 +40,6 @@ public class FileServiceImpl implements FileService {
 
         GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
         FileDTO response = new FileDTO();
-        response.setTitle(file.getMetadata().get("title").toString());
         response.setStream(operations.getResource(file).getInputStream());
 
         return response;

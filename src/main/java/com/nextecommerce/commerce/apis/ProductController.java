@@ -42,7 +42,16 @@ public class ProductController  {
 
     @PostMapping
     @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Created",subjectKey="CREATE")
-    public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO request,@RequestParam("image") MultipartFile file, HttpServletRequest http) throws IOException {
+    public ResponseEntity<ProductResponseDTO> createProduct( @RequestParam( value = "title",required = true) String title,
+                                                             @RequestParam( value = "price",required = true) Double price,
+                                                             @RequestParam( value = "description",required = true)  String description,
+                                                             @RequestParam(value = "image", required = false) MultipartFile file,
+                                                             HttpServletRequest http) throws IOException {
+
+        ProductRequestDTO request=ProductRequestDTO.builder().
+                title(title).
+                price(price).
+                description(description).build();
 
         return new ResponseEntity<>(productService.createProduct(request,file,http),HttpStatus.CREATED);
 
@@ -50,7 +59,17 @@ public class ProductController  {
 
     @PutMapping("/{id}")
     @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Updated",subjectKey="UPDATE")
-    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id,@Valid @RequestBody ProductRequestDTO request,@RequestParam("image") MultipartFile file, HttpServletRequest http) throws IOException {
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id,
+                                                            @RequestParam( value = "title",required = false) String title,
+                                                            @RequestParam( value = "price",required = false) Double price,
+                                                            @RequestParam( value = "description",required = false)  String description,
+                                                            @RequestParam(value = "image", required = false) MultipartFile file,
+                                                            HttpServletRequest http) throws IOException {
+
+        ProductRequestDTO request=ProductRequestDTO.builder().
+                title(title).
+                price(price).
+                description(description).build();
 
         return new ResponseEntity<>(productService.updateProduct(id,request,file,http),HttpStatus.OK);
 
@@ -75,7 +94,7 @@ public class ProductController  {
 
     @PostMapping("/{productId}/addCategory")
     @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Category Added",subjectKey="ADD")
-    public ResponseEntity<CategoryResponseDTO> addCategory(@PathVariable Long productId,@PathVariable Categories newCategory) {
+    public ResponseEntity<CategoryResponseDTO> addCategory(@PathVariable Long productId,@Valid @RequestBody Categories newCategory) {
 
         return new ResponseEntity<>(productService.addCategory(productId,newCategory),HttpStatus.CREATED);
 

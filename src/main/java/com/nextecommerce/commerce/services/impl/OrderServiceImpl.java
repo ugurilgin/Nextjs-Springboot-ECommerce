@@ -9,6 +9,7 @@ import com.nextecommerce.commerce.mappers.OrderMapper;
 import com.nextecommerce.commerce.repositories.AddressRepository;
 import com.nextecommerce.commerce.repositories.OrderRepository;
 import com.nextecommerce.commerce.services.OrderService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final AddressRepository addressRepository;
     private final OrderMapper orderMapper;
 
     @Override
@@ -41,9 +43,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderResponseDTO createOrder(OrderRequestDTO request) {
 
         Orders orders  = orderMapper.toObjFromRequest(request);
+        Address address = addressRepository.findById(request.getAddress().getId()).orElse(null);
+        if(address==null)
+        {
+            addressRepository.save(request.getAddress());
+        }
         Orders response = orderRepository.save(orders);
 
         return orderMapper.toResponse(response);
@@ -51,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderResponseDTO updateOrder(Long id, OrderRequestDTO request) {
 
         Orders orders = orderRepository.findById(id)
@@ -65,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void deleteOrder(Long id) {
 
         Orders orders = orderRepository.findById(id)

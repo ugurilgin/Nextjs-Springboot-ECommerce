@@ -25,9 +25,12 @@ public interface ProductMapper {
     abstract void convert(@MappingTarget Products products, ProductRequestDTO request);
 
     default List<String> mapCategoriesToStrings(Set<Categories> categories) {
-        return categories.stream()
-                .map(category -> category.getCategory())
-                .collect(Collectors.toList());
+        if (categories != null) {
+            return categories.stream()
+                    .map(category -> category.getCategory())
+                    .collect(Collectors.toList());
+        }
+        else return null;
     }
 
 }

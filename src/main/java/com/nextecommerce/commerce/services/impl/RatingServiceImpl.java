@@ -7,6 +7,7 @@ import com.nextecommerce.commerce.exceptions.EntityNotFoundException;
 import com.nextecommerce.commerce.mappers.RatingMapper;
 import com.nextecommerce.commerce.repositories.RatingsRepository;
 import com.nextecommerce.commerce.services.RatingService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public RatingResponseDTO createRating(RatingRequestDTO request) {
 
         Ratings rating  = ratingMapper.toObjFromRequest(request);
@@ -50,6 +52,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public RatingResponseDTO updateRating(Long id, RatingRequestDTO request) {
 
         Ratings rating = ratingsRepository.findById(id)
@@ -63,6 +66,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public void deleteRating(Long id) {
 
         Ratings rating = ratingsRepository.findById(id)

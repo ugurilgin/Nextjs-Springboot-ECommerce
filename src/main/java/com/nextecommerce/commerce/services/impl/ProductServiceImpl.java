@@ -16,6 +16,7 @@ import com.nextecommerce.commerce.repositories.RatingsRepository;
 import com.nextecommerce.commerce.services.PhotoService;
 import com.nextecommerce.commerce.services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,17 +54,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductResponseDTO createProduct(ProductRequestDTO request, MultipartFile file , HttpServletRequest http) throws IOException {
 
         Products products  = productMapper.toObjFromRequest(request);
-        PhotoResponseDTO photo= photoService.addPhoto(file,http);
-        products.setImage(photo.getUrl());
+        PhotoResponseDTO photo=file!=null? photoService.addPhoto(file,http):null;
+        products.setImage(photo!=null?photo.getUrl():null);
         Products response = productRepository.save(products);
 
         return productMapper.toResponse(response);
     }
 
     @Override
+    @Transactional
     public ProductResponseDTO updateProduct(Long id, ProductRequestDTO request ,MultipartFile file ,  HttpServletRequest http) throws IOException {
 
         Products product = productRepository.findById(id)
@@ -71,7 +74,8 @@ public class ProductServiceImpl implements ProductService {
 
         productMapper.convert(product,request);
 
-        PhotoResponseDTO photo= photoService.addPhoto(file,http);
+        PhotoResponseDTO photo=file!=null? photoService.addPhoto(file,http):null;
+        if(photo!=null)
         product.setImage(photo.getUrl());
 
         Products response = productRepository.save(product);
@@ -80,11 +84,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductResponseDTO addRating(Long id, Long ratingId) {
 
         Products product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id " + id ));
-        Ratings rating = ratingsRepository.findById(id)
+        Ratings rating = ratingsRepository.findById(ratingId)
                 .orElse(null);
 
         product.setRatings(rating);
@@ -102,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
 
     }
-
+    @Transactional
     public CategoryResponseDTO addCategory(Long productId, Categories newCategory) {
 
         Categories categories = productRepository.findById(productId).map(product -> {
@@ -124,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
         }).orElseThrow(() -> new EntityNotFoundException("Not found Product with id = " + productId));
         return  categoryMapper.toResponse(categories);
     }
-
+    @Transactional
     public ProductResponseDTO deleteCategoryFromProduct(Long productId, Long categoryId) {
         return productRepository.findById(productId).map(product -> {
             product.removeCategory(categoryId);

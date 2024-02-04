@@ -45,14 +45,6 @@ public class OrderController {
 
     }
 
-    @PutMapping("/{id}")
-    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Updated",subjectKey="UPDATE")
-    public  ResponseEntity<OrderResponseDTO> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderRequestDTO request) {
-
-        return new ResponseEntity<>(orderService.updateOrder(id,request),HttpStatus.OK);
-
-    }
-
     @DeleteMapping("/{id}")
     @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteOrder(@PathVariable Long id) {

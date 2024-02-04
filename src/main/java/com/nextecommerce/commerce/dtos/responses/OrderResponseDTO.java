@@ -17,9 +17,9 @@ public class OrderResponseDTO {
 
     private Long userId;
 
-    private List<Products> products;
+    private List<ProductResponseForOrderDTO> products;
 
     private Double sumPrice;
 
-    private Address address;
+    private AddressResponseDTO address;
 }

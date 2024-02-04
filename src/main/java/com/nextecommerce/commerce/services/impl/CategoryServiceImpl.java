@@ -7,6 +7,7 @@ import com.nextecommerce.commerce.exceptions.EntityNotFoundException;
 import com.nextecommerce.commerce.mappers.CategoryMapper;
 import com.nextecommerce.commerce.repositories.CategoryRepository;
 import com.nextecommerce.commerce.services.CategoryService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryResponseDTO createCategory(CategoryRequestDTO request) {
 
         Categories categories  = categoryMapper.toObjFromRequest(request);
@@ -50,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryResponseDTO updateCategory(Long id, CategoryRequestDTO request) {
 
         Categories categories = categoryRepository.findById(id)
@@ -64,6 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long id) {
 
         Categories categories = categoryRepository.findById(id)
