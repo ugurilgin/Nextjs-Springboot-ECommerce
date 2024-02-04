@@ -2,6 +2,8 @@ package com.nextecommerce.commerce.dtos.responses;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -17,7 +19,7 @@ public class ProductResponseDTO {
 
     private String description;
 
-    private String category;
+    private List<String> category;
 
     private String image;
 
