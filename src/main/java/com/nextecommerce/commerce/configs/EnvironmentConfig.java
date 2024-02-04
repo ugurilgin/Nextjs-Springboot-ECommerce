@@ -23,4 +23,10 @@ public class EnvironmentConfig {
     @Value("${commerce.kafka.producers.application}")
     public String applicationEventProducerName;
 
+    @Value("${commerce.kafka.topic}")
+    public String kafkaTopic;
+
+    @Value("${commerce.kafka.group-id}")
+    public String kafkaGroup;
+
 }

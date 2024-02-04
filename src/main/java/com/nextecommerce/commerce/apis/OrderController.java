@@ -1,9 +1,11 @@
 package com.nextecommerce.commerce.apis;
 
 import com.nextecommerce.commerce.annotation.ActivityLog;
+import com.nextecommerce.commerce.annotation.EventPublish;
 import com.nextecommerce.commerce.dtos.requests.OrderRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.OrderResponseDTO;
 import com.nextecommerce.commerce.enums.ActivityLogScope;
+import com.nextecommerce.commerce.enums.EventType;
 import com.nextecommerce.commerce.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -36,9 +38,10 @@ public class OrderController {
 
     @PostMapping
     @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Created",subjectKey="CREATE")
-    public  ResponseEntity<OrderResponseDTO> createOrder(@Valid @RequestBody OrderRequestDTO request) {
+    @EventPublish(topic ="order-create",eventType = EventType.ORDER_CREATED)
+    public  ResponseEntity<String> createOrder(@Valid @RequestBody OrderRequestDTO request) {
 
-        return new ResponseEntity<>(orderService.createOrder(request),HttpStatus.CREATED);
+        return new ResponseEntity<>("Order Succesfully Created",HttpStatus.CREATED);
 
     }
 
