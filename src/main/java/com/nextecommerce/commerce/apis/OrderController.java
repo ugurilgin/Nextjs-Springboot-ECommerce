@@ -1,7 +1,9 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.requests.OrderRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.OrderResponseDTO;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Created",subjectKey="CREATE")
     public  ResponseEntity<OrderResponseDTO> createOrder(@Valid @RequestBody OrderRequestDTO request) {
 
         return new ResponseEntity<>(orderService.createOrder(request),HttpStatus.CREATED);
@@ -40,6 +43,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Updated",subjectKey="UPDATE")
     public  ResponseEntity<OrderResponseDTO> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderRequestDTO request) {
 
         return new ResponseEntity<>(orderService.updateOrder(id,request),HttpStatus.OK);
@@ -47,6 +51,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Order Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteOrder(@PathVariable Long id) {
 
         orderService.deleteOrder(id);

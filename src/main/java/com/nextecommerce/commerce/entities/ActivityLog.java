@@ -29,7 +29,8 @@ public class ActivityLog extends BaseEntity implements Serializable {
 
     @Column(name = "title", length = 100)
     private String title;
-
+    @Column(name = "subject", length = 100)
+    private String subject;
     @Column(name = "description", length = 500)
     private String description;
 

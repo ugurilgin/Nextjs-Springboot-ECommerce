@@ -12,6 +12,7 @@ public @interface ActivityLog {
     ActivityLogScope scope();
 
     String messageKey();
+    String subjectKey();
 
     Class<? extends Annotation> payloadSource() default RequestBody.class;
 

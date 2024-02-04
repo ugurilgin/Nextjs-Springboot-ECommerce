@@ -23,12 +23,13 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void log(ActivityLogStatus status, String title, String description) {
+    public void log(ActivityLogStatus status, String title, String description,String subject) {
 
         var activity = ActivityLog.builder()
                 .status(status)
                 .source(request.getRequestURI())
                 .ipAddress(ipUtil.getClientIpAddr(request))
+                .subject(subject)
                 .title(title)
                 .description(description)
                 .build();
@@ -37,13 +38,14 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void log(ActivityLogStatus status, String title, String description, String payload) {
+    public void log(ActivityLogStatus status, String title, String description, String payload,String subject) {
 
         var activity = ActivityLog.builder()
                 .status(status)
                 .source(request.getRequestURI())
                 .ipAddress(request.getRemoteAddr())
                 .title(title)
+                .subject(subject)
                 .description(description)
                 .payload(payload)
                 .build();
@@ -52,13 +54,14 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void log(ActivityLogStatus status, String title, String description, String payload, String result) {
+    public void log(ActivityLogStatus status, String title, String description, String payload, String result,String subject) {
 
         var activity = ActivityLog.builder()
                 .status(status)
                 .source(request.getRequestURI())
                 .ipAddress(request.getRemoteAddr())
                 .title(title)
+                .subject(subject)
                 .description(description)
                 .payload(payload)
                 .result(result)

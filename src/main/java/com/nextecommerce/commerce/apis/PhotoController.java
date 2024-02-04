@@ -1,6 +1,8 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.responses.FileDTO;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.PhotoService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class PhotoController   {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Photo Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deletePhoto(@PathVariable String id ) {
          photoService.deletePhoto(id);
          return new ResponseEntity<>(HttpStatus.NO_CONTENT);

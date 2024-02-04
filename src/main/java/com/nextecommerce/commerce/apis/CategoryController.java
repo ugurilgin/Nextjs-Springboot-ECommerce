@@ -1,7 +1,9 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.requests.CategoryRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.CategoryResponseDTO;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.CategoryService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Category Created",subjectKey="CREATE")
     public ResponseEntity<CategoryResponseDTO> createCategory(@Valid @RequestBody CategoryRequestDTO request) {
 
         return new ResponseEntity<>(categoryService.createCategory(request),HttpStatus.CREATED);
@@ -41,6 +44,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Category Updated",subjectKey="UPDATE")
     public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable Long id,@Valid @RequestBody CategoryRequestDTO request) {
 
         return new ResponseEntity<>(categoryService.updateCategory(id,request),HttpStatus.OK);
@@ -48,6 +52,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Category DELETED",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
 
         categoryService.deleteCategory(id);

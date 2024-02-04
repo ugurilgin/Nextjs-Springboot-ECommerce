@@ -1,7 +1,9 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.requests.AddressRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.AddressResponseDTO;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.AddressService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class AddressController {
     }
 
     @PostMapping
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Address Created",subjectKey="CREATE")
     public ResponseEntity<AddressResponseDTO> createAddress(@Valid @RequestBody AddressRequestDTO request) {
 
         return new ResponseEntity<>(addressService.createAddress(request),HttpStatus.CREATED);
@@ -41,6 +44,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Address Updated",subjectKey="UPDATE")
     public ResponseEntity<AddressResponseDTO> updateAddress(@PathVariable Long id,@RequestBody @Valid AddressRequestDTO request) {
 
         return new ResponseEntity<>(addressService.updateAddress(id,request),HttpStatus.OK);
@@ -48,6 +52,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Address Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteAddress(@PathVariable Long id) {
 
         addressService.deleteAddress(id);

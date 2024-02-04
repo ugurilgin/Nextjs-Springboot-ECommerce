@@ -41,10 +41,11 @@ public class ActivityLogAspect {
 
 
     private void logActivity(JoinPoint joinPoint, Object returnValue, Throwable ex) {
-       var signature = (MethodSignature) joinPoint.getSignature();
+        var signature = (MethodSignature) joinPoint.getSignature();
         var method = signature.getMethod();
         var activityAnnotation = method.getAnnotation(ActivityLog.class);
         var payloadSource = activityAnnotation.payloadSource();
+        var subjectKey = activityAnnotation.subjectKey();
         var payloadObject = getPayload(payloadSource, joinPoint.getArgs(), method.getParameterAnnotations());
         var payloadString = ObjectMapperUtil.toJsonString(payloadObject);
         var returnValueString = ObjectMapperUtil.toJsonString(returnValue);
@@ -57,16 +58,15 @@ public class ActivityLogAspect {
 
         var title = messageKey;
         var description = descriptionKey;
-              ;
-
+        var subject = subjectKey;
         var status = Objects.isNull(ex)
                 ? ActivityLogStatus.SUCCESS
                 : ActivityLogStatus.ERROR;
 
         switch (scope) {
-            case BASIC -> activityLogService.log(status, title, description);
-            case DETAILED -> activityLogService.log(status, title, description, payloadString);
-            case FULL -> activityLogService.log(status, title, description, payloadString, returnValueString);
+            case BASIC -> activityLogService.log(status, title, description,subject);
+            case DETAILED -> activityLogService.log(status, title, description, payloadString,subject);
+            case FULL -> activityLogService.log(status, title, description, payloadString, returnValueString,subject);
         }
     }
 

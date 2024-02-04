@@ -1,7 +1,9 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.requests.RatingRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.RatingResponseDTO;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.RatingService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ public class RatingController  {
     }
 
     @PostMapping
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Rating Created",subjectKey="CREATE")
     public  ResponseEntity<RatingResponseDTO> createRating(@Valid @RequestBody RatingRequestDTO request) {
 
         return new ResponseEntity<>(ratingService.createRating(request),HttpStatus.CREATED);
@@ -40,6 +43,7 @@ public class RatingController  {
     }
 
     @PutMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Rating Updated",subjectKey="UPDATE")
     public  ResponseEntity<RatingResponseDTO> updateRating(@PathVariable Long id, @Valid @RequestBody RatingRequestDTO request) {
 
         return new ResponseEntity<>(ratingService.updateRating(id,request),HttpStatus.OK);
@@ -47,6 +51,7 @@ public class RatingController  {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Rating Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteRating(@PathVariable Long id) {
 
         ratingService.deleteRating(id);

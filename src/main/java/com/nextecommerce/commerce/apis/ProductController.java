@@ -1,9 +1,11 @@
 package com.nextecommerce.commerce.apis;
 
+import com.nextecommerce.commerce.annotation.ActivityLog;
 import com.nextecommerce.commerce.dtos.requests.ProductRequestDTO;
 import com.nextecommerce.commerce.dtos.responses.CategoryResponseDTO;
 import com.nextecommerce.commerce.dtos.responses.ProductResponseDTO;
 import com.nextecommerce.commerce.entities.Categories;
+import com.nextecommerce.commerce.enums.ActivityLogScope;
 import com.nextecommerce.commerce.services.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -39,6 +41,7 @@ public class ProductController  {
     }
 
     @PostMapping
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Created",subjectKey="CREATE")
     public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody ProductRequestDTO request,@RequestParam("image") MultipartFile file, HttpServletRequest http) throws IOException {
 
         return new ResponseEntity<>(productService.createProduct(request,file,http),HttpStatus.CREATED);
@@ -46,6 +49,7 @@ public class ProductController  {
     }
 
     @PutMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Updated",subjectKey="UPDATE")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id,@Valid @RequestBody ProductRequestDTO request,@RequestParam("image") MultipartFile file, HttpServletRequest http) throws IOException {
 
         return new ResponseEntity<>(productService.updateProduct(id,request,file,http),HttpStatus.OK);
@@ -53,6 +57,7 @@ public class ProductController  {
     }
 
     @PostMapping("/{id}/addRating/{ratingId}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Rating Added",subjectKey="ADD")
     public ResponseEntity<ProductResponseDTO> addRating(@PathVariable Long id,@PathVariable Long ratingId) {
 
         return new ResponseEntity<>(productService.addRating(id,ratingId),HttpStatus.CREATED);
@@ -60,6 +65,7 @@ public class ProductController  {
     }
 
     @DeleteMapping("/{id}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Deleted",subjectKey="DELETE")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable Long id) {
 
         productService.deleteProduct(id);
@@ -68,6 +74,7 @@ public class ProductController  {
     }
 
     @PostMapping("/{productId}/addCategory")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Category Added",subjectKey="ADD")
     public ResponseEntity<CategoryResponseDTO> addCategory(@PathVariable Long productId,@PathVariable Categories newCategory) {
 
         return new ResponseEntity<>(productService.addCategory(productId,newCategory),HttpStatus.CREATED);
@@ -75,6 +82,7 @@ public class ProductController  {
     }
 
     @DeleteMapping("/{productId}/category/{categoryId}")
+    @ActivityLog(scope = ActivityLogScope.DETAILED, messageKey = "Product Deleted",subjectKey="DELETE")
     public ResponseEntity<ProductResponseDTO> deleteCategoryFromProduct(@PathVariable Long productId,@PathVariable Long categoryId) {
 
         return new ResponseEntity<>(productService.deleteCategoryFromProduct(productId,categoryId),HttpStatus.OK);
