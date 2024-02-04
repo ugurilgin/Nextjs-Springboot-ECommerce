@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ImpFileService implements FileService {
+public class FileServiceImpl implements FileService {
 
     private final GridFsTemplate gridFsTemplate;
     private final GridFsOperations operations;

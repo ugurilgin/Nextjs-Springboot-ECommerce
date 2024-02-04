@@ -11,7 +11,5 @@ public interface PhotoMapper {
 
     PhotoResponseDTO toResponse(Photo photo);
 
-    //abstract void toObj(@MappingTarget Photo position, PhotoRequest request);
-
 
 }

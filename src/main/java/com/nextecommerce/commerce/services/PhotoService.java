@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public interface PhotoService {
 
-    ResponseEntity<PhotoResponseDTO> addPhoto( MultipartFile file , HttpServletRequest request) throws IOException ;
+    PhotoResponseDTO addPhoto( MultipartFile file , HttpServletRequest request) throws IOException ;
     FileDTO getPhoto(String id) throws IOException;
-    ResponseEntity<HttpStatus> deletePhoto(String id);
-    ResponseEntity<PhotoResponseDTO> getPhotoInfo(String id);
+    void deletePhoto(String id);
+    PhotoResponseDTO getPhotoInfo(String id);
 
 }
