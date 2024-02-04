@@ -33,7 +33,7 @@ public class Categories extends BaseEntity {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            mappedBy = "categories")
+            mappedBy = "category")
     @JsonIgnore
     private Set<Products> products = new HashSet<>();
 
