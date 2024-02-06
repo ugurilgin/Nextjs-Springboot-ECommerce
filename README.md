@@ -55,10 +55,12 @@ PostgreSQL database is preferred to store the relational structure of data, and 
    ```ruby
     cd React-Springboot-ECommerce
   ```
-- Install dependencies and build the project:
-  ```
+ Install dependencies and build the project:
+ 
+  ```ruby
  mvn clean install
  ```
+
 Run the application
 
  ```ruby
