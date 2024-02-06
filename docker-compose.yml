@@ -17,7 +17,7 @@ services:
       - ./mongo-data:/data/db
     environment:
       - MONGO_INITDB_DATABASE=commerce
-      - 
+      -
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
