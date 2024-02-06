@@ -48,7 +48,7 @@ PostgreSQL database is preferred to store the relational structure of data, and 
  Proje dizininde aşağıdaki komutları çalıştırarak projeyi başlatabilirsiniz:
  - To run the project, follow these steps:
 ```ruby
-   git clone [<repository_url>](https://github.com/ugurilgin/Nextjs-Springboot-ECommerce) https://github.com/ugurilgin/Nextjs-Springboot-ECommerce
+   git clone https://github.com/ugurilgin/Nextjs-Springboot-ECommerce
 ```
 
    Navigate to the project directory:
@@ -57,8 +57,8 @@ PostgreSQL database is preferred to store the relational structure of data, and 
   ```
 - Install dependencies and build the project:
   ```ruby
-- mvn clean install
--  ```
+ mvn clean install
+ ```
 Run the application
  ```ruby
 java -jar target/CommerceApplication.jar
