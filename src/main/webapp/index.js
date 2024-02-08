@@ -6,13 +6,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min'
 import {Provider} from 'react-redux'
 import App from './App';
 import store from "./store";
+import { HashRouter } from 'react-router-dom'
 
 ReactDOM.render(
-    <BrowserRouter>
+    <HashRouter>
         <Provider store={store}>
             <App />
             </Provider>
-    </BrowserRouter>,
+    </HashRouter>,
     document.getElementById('react')
 );
 

@@ -9,6 +9,7 @@ import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 function App() {
  
@@ -24,6 +25,7 @@ function App() {
             <Route exact path="/checkout" element={<Checkout/>} />
             <Route exact path="/about" element={<About/>} />
             <Route exact path="/contact" element={<Contact/>} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
       <Footer/>
     </>
